@@ -11,23 +11,23 @@ module.exports = function(app) {
             }
         ).catch(
             (err) => {
-                res.json({error: err});
+                res.json(err);
             }
         );
     });
 
     app.post("/search", (req, res) => {
-        // set bookTitle to the req.body.title with spaces replaced with plus signs(+)
-        let bookTitle = req.body.title.replace(/\s/g, "+");
+        
+        let title = req.body.title.replace(/\s/g, "+");
         axios.get(
-            `https://www.googleapis.com/books/v1/volumes?q=${bookTitle}&key=${process.env.GBOOKS_KEY}`
+            `https://www.googleapis.com/books/v1/volumes?q=${title}&key=${process.env.GOOGLEKEY}`
         ).then(
             (response) => {
                 res.json(response.data.items)
             }
         ).catch(
             (err) => {
-                res.json({error: error})
+                res.json(err)
             }
         );
     });
@@ -39,7 +39,7 @@ module.exports = function(app) {
             }
         ).catch(
             (err) => {
-                res.json({error: err});
+                res.json(err);
             }
         );
     });
@@ -51,14 +51,14 @@ module.exports = function(app) {
             }
         ).catch(
             (err) => {
-                rres.json({error: err});
+                rres.json(err);
             }
         );
     });
 
-    // Send every other request to the React app
+    
     // Define any API routes before this runs
     app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+        res.sendFile(path.join(__dirname, "../client/build/index.html"));
     });
 }

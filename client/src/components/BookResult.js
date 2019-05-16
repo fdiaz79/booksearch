@@ -51,30 +51,32 @@ class BookResult extends React.Component {
 
     render() {
         return(
-            <div className="bookResult" id={(this.props.id)? this.props.id: null} style={{display: this.state.deleted? "none" : "block"}}>
+            <div className="searchResponse" id={this.props.id} >
                 <div className="row">
-                    <div className="aboutBook">
+                    <div className="col-12 text-center">
                         <h4>{this.props.title}</h4>
-                        <p>By: {(this.props.authors)? this.props.authors.join(", "): "N/A"}</p>
-                    </div>
-                    <div className="btnDiv">
-                        {
-                            // if link to book exists include View button else do not
-                            (this.props.link)? <a href={this.props.link} target="_blank" rel="noopener noreferrer"><button type="button" name="view">View</button></a> : null
-                        }
-                        {
-                            // if this.props.path is "/" display save button else display Delete button
-                            (this.props.path === "/")? <button type="button" name="save" onClick={this.handleSaveClick} disabled={this.state.saved}>{(this.state.saved)? "Saved" : "Save"}</button> : <button type="button" name="Delete" onClick={this.handleDeleteClick} disabled={this.state.deleted}>Delete</button>
-                        }
+                        <p>By: {this.props.authors}</p>
                     </div>
                 </div>
                 <div className="row">
-                    {(this.props.img)? <img src= {
-                        // if smallthubmail exists on this.props.img use that else if thumbnail exists on this.props.img use that else leave src empty
-                        (this.props.img.smallThumbnail)? this.props.img.smallThumbnail:
-                        (this.props.img.thumbnail)? this.props.img.thumbnail: ""
-                    } alt="book cover"/>: null}
-                    <p>{(this.props.description)? this.props.description: "N/A"}</p>
+                    <div className="col-sm-4">
+                        <div className="text-center">
+                            <img className="img-thumbnail" src={this.props.img.thumbnail} alt="Book image" />
+                        </div>
+                        <div className="text-center">
+                            {
+                                // if link to book exists include View button else do not
+                                <a href={this.props.link} target="_blank" rel="noopener noreferrer"><button type="button" name="view">View</button></a>
+                            }
+                            {
+                                // if this.props.path is "/" display save button else display Delete button
+                                (this.props.path === "/")? <button type="button" name="save" onClick={this.handleSaveClick} disabled={this.state.saved}>{(this.state.saved)? "Saved" : "Save"}</button> : <button type="button" name="Delete" onClick={this.handleDeleteClick} disabled={this.state.deleted}>Delete</button>
+                            }
+                        </div>               
+                    </div>
+                    <div className="col-sm-8">
+                        <p>{this.props.description}</p>
+                    </div>            
                 </div>
             </div>
         );
